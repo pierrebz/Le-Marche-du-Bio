@@ -2,18 +2,13 @@ import pandas as pd
 pd.set_option('mode.chained_assignment', None) #ignore SettingWithCopyWarning
 from pymongo import MongoClient
 
+import tram_departements
+import mymongodb
+import settings
+
 # importation des données
-dataset = pd.read_csv("../Data/communes-departement-region.csv")
-
-data = dataset[["code_departement", "nom_departement", "nom_region", "code_region",
-                "nom_commune_complet", "code_commune", "latitude", "longitude"]]
+data = tram_departements.cleaning_dataset("../Data/communes-departement-region.csv", settings.my_agent)
 data.rename(columns= {"code_departement": "_id"}, inplace= True)
-
-# supprimer les lignes avec un _id == NaN
-data.drop(index= data[data["_id"].isna()].index, inplace=True)
-
-# supprimer les lignes avec le departement == NaN
-data.drop(index= data[data["nom_departement"].isna()].index, inplace=True)
 
 # liste des regions
 region_list = data.nom_region.unique()
@@ -32,8 +27,9 @@ region_dict = {a: {"nom_region": a,
 
 data_mongo = data[["_id", "nom_departement", "nom_region"]].drop_duplicates(ignore_index= True)
 data_mongo.rename(columns= {"nom_departement": "departement", "nom_region": "region"}, inplace= True)
+
 # insert mongo
-client = MongoClient("localhost", 27117)
+client = MongoClient("localhost", mymongodb.port_DWH)
 db = client["Test"] # database
 collection = db["departements"] #collection
 
@@ -47,5 +43,7 @@ for row in data_mongo.departement:
 # maj de la variable region
 for row in data_mongo.region:
     db.departements.update_many({"region":row}, {"$set": {"region": region_dict[row]}})
+
+
 
 

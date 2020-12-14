@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mongo_api:
+    image: mongo:latest
+    ports:
+      - 28117:27017
+    container_name: test_DWH
+    volumes:
+      - ./test_DWH:/data/db
+    restart: always
