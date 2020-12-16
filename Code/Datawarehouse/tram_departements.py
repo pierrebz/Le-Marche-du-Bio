@@ -1,17 +1,28 @@
+from io import StringIO
+
 import pandas as pd
 pd.set_option('mode.chained_assignment', None) #ignore SettingWithCopyWarning
 from geopy.geocoders import Nominatim
 
-import settings
+import loadfile
+from Code.SetParameters import private_settings, public_settings
 
 
-def cleaning_dataset(path, my_agent):
+def cleaning_dataset(filename, my_agent):
     """
-    Fonction qui nettoie le jeu de données contenant les informations sur les communes
-    :param path:
+
+    Fonction qui nettoie le jeu de données contenant les informations sur les communes et qui va constitué la tram
+    de base de la database concernant les communes
+
+    :param filename:
     :return:
     """
-    dataset = pd.read_csv(path)
+    # on télécharge le fichier depuis GCP
+    file = StringIO(loadfile.load_cloud_storage(file=filename, bucket_name="biofitec_datalake",
+                                                key= public_settings.path_key_bucket).dataset)
+
+    # on le transforme en dataframe
+    dataset = pd.read_csv(file, sep=",")
 
     # on selectionne certaines colonnes
     data = dataset[["code_departement", "nom_departement", "nom_region", "code_region",
@@ -38,5 +49,5 @@ def cleaning_dataset(path, my_agent):
 
 
 if __name__ == "__main__":
-    dataset = cleaning_dataset(path= "../Data/communes-departement-region.csv",
-                               my_agent= settings.my_agent)
+    dataset = cleaning_dataset(filename="communes-departement-region.csv",
+                               my_agent= private_settings.my_agent)

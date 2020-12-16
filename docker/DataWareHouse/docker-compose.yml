@@ -4,7 +4,7 @@ services:
     image: mongo:latest
     ports:
       - 28117:27017
-    container_name: test_DWH
+    container_name: DWH
     volumes:
-      - ./test_DWH:/data/db
+      - ./DWH:/data/db
     restart: always

@@ -5,32 +5,51 @@ channels:
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
+  - aiohttp=3.7.3=py38h25fe258_0
+  - async-timeout=3.0.1=py_1000
+  - attrs=20.3.0=pyhd3deb0d_0
   - beautifulsoup4=4.9.3=pyhb0f4dca_0
   - blas=1.0=mkl
   - brotlipy=0.7.0=py38h7b6447c_1000
   - bs4=4.9.3=0
-  - ca-certificates=2020.10.14=0
-  - certifi=2020.6.20=py38_0
+  - c-ares=1.17.1=h36c2ea0_0
+  - ca-certificates=2020.12.5=ha878542_0
+  - cachetools=4.1.1=py_0
+  - certifi=2020.12.5=py38h578d9bd_0
   - cffi=1.14.3=py38he30daa8_0
   - chardet=3.0.4=py38_1003
   - cryptography=3.1.1=py38h1ba5d50_0
+  - google-api-core=1.23.0=pyh9f0ad1d_0
+  - google-auth=1.23.0=pyhd8ed1ab_0
+  - google-cloud-core=1.4.4=pyhd3deb0d_0
+  - google-cloud-storage=1.33.0=pyhd3deb0d_0
+  - google-crc32c=1.0.0=py38h6d3b9ce_1
+  - google-resumable-media=1.1.0=pyh9f0ad1d_0
+  - googleapis-common-protos=1.52.0=py38h578d9bd_1
+  - grpcio=1.33.2=py38heead2fc_2
   - idna=2.10=py_0
   - intel-openmp=2020.2=254
   - ld_impl_linux-64=2.33.1=h53a641e_7
+  - libcrc32c=1.1.1=he1b5a44_2
   - libedit=3.1.20191231=h14c3975_1
   - libffi=3.3=he6710b0_2
   - libgcc-ng=9.1.0=hdf63c60_0
+  - libprotobuf=3.13.0.1=h8b12597_0
   - libstdcxx-ng=9.1.0=hdf63c60_0
   - mkl=2020.2=256
   - mkl-service=2.3.0=py38he904b0f_0
   - mkl_fft=1.2.0=py38h23d657b_0
   - mkl_random=1.1.1=py38h0573a6f_0
+  - multidict=4.7.5=py38h1e0a361_2
   - ncurses=6.2=he6710b0_1
   - numpy=1.19.2=py38h54aff64_0
   - numpy-base=1.19.2=py38hfa32c7d_0
-  - openssl=1.1.1h=h7b6447c_0
+  - openssl=1.1.1i=h27cfd23_0
   - pandas=1.1.3=py38he6710b0_0
   - pip=20.3.1=py38h06a4308_0
+  - protobuf=3.13.0.1=py38he6710b0_1
+  - pyasn1=0.4.8=py_0
+  - pyasn1-modules=0.2.7=py_0
   - pycparser=2.20=py_2
   - pymongo=3.11.0=py38he6710b0_0
   - pyopenssl=19.1.0=py_1
@@ -41,14 +60,18 @@ dependencies:
   - pytz=2020.1=py_0
   - readline=8.0=h7b6447c_0
   - requests=2.24.0=py_0
+  - rsa=4.6=pyh9f0ad1d_0
   - setuptools=51.0.0=py38h06a4308_2
   - six=1.15.0=py_0
   - soupsieve=2.0.1=py_1
   - sqlite=3.33.0=h62c20be_0
   - tk=8.6.10=hbc83047_0
+  - typing-extensions=3.7.4.3=0
+  - typing_extensions=3.7.4.3=py_0
   - urllib3=1.25.11=py_0
   - wheel=0.36.1=pyhd3eb1b0_0
   - xz=5.2.5=h7b6447c_0
+  - yarl=1.5.1=py38h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
   - pip:
     - geographiclib==1.50
