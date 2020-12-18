@@ -1,6 +1,7 @@
 import pandas as pd
 pd.set_option('mode.chained_assignment', None) #ignore SettingWithCopyWarning
 from pymongo import MongoClient
+from unidecode import unidecode
 
 import tram_departements
 from Code.SetParameters import public_settings, private_settings
@@ -10,6 +11,17 @@ from Code.SetParameters import public_settings, private_settings
 data = tram_departements.cleaning_dataset(filename="communes-departement-region.csv",
                                              my_agent= private_settings.my_agent)
 data.rename(columns= {"code_departement": "_id"}, inplace= True)
+
+# mettre en upper et supprimer les accents les nom de département et région
+data.nom_departement = data.nom_departement.apply(unidecode)
+data.nom_departement = data.nom_departement.str.upper()
+
+data.nom_region = data.nom_region.apply(unidecode)
+data.nom_region = data.nom_region.str.upper()
+
+data.nom_commune_complet = data.nom_commune_complet.apply(unidecode)
+data.nom_commune_complet = data.nom_commune_complet.str.upper()
+
 
 # liste des regions
 region_list = data.nom_region.unique()

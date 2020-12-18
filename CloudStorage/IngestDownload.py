@@ -26,6 +26,9 @@ class Cloud:
         # on ajoute le fichier d'authentification aux variables d'environnement
         os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.abspath(key)
 
+        # nom du bucket
+        self.bucket_name = bucket_name
+
         # on se connecte à google cloud platform
         try:
             self.client = storage.client.Client()
@@ -34,7 +37,7 @@ class Cloud:
 
         # on accède au bucket
         try:
-            self.bucket = self.client.get_bucket(bucket_name)
+            self.bucket = self.client.get_bucket(self.bucket_name)
         except google.api_core.exceptions.NotFound:
             warnings.warn("Veuillez vérifier le nom du bucket")
         except AttributeError:
@@ -83,3 +86,13 @@ class Cloud:
             self.dataset = 0
 
         return self
+
+    def list_files_blod(self, path):
+        """
+
+        Cette fonction retourne la liste des fichiers dans un blod
+
+        :param path:
+        :return:
+        """
+        return [file.name for file in self.client.list_blobs(self.bucket_name, prefix= path)][1:]
