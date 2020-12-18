@@ -13,9 +13,9 @@ dependencies:
   - brotlipy=0.7.0=py38h7b6447c_1000
   - bs4=4.9.3=0
   - c-ares=1.17.1=h36c2ea0_0
-  - ca-certificates=2020.12.5=ha878542_0
+  - ca-certificates=2020.10.14=0
   - cachetools=4.1.1=py_0
-  - certifi=2020.12.5=py38h578d9bd_0
+  - certifi=2020.6.20=py38_0
   - cffi=1.14.3=py38he30daa8_0
   - chardet=3.0.4=py38_1003
   - cryptography=3.1.1=py38h1ba5d50_0
@@ -44,7 +44,7 @@ dependencies:
   - ncurses=6.2=he6710b0_1
   - numpy=1.19.2=py38h54aff64_0
   - numpy-base=1.19.2=py38hfa32c7d_0
-  - openssl=1.1.1i=h27cfd23_0
+  - openssl=1.1.1h=h7b6447c_0
   - pandas=1.1.3=py38he6710b0_0
   - pip=20.3.1=py38h06a4308_0
   - protobuf=3.13.0.1=py38he6710b0_1
@@ -68,13 +68,18 @@ dependencies:
   - tk=8.6.10=hbc83047_0
   - typing-extensions=3.7.4.3=0
   - typing_extensions=3.7.4.3=py_0
+  - unidecode=1.1.1=py_0
   - urllib3=1.25.11=py_0
   - wheel=0.36.1=pyhd3eb1b0_0
+  - xlrd=1.2.0=py_0
   - xz=5.2.5=h7b6447c_0
   - yarl=1.5.1=py38h7b6447c_0
   - zlib=1.2.11=h7b6447c_3
   - pip:
+    - et-xmlfile==1.0.1
     - geographiclib==1.50
     - geopy==2.0.0
+    - jdcal==1.4.1
+    - openpyxl==3.0.5
 prefix: /home/fitec/anaconda3/envs/BIO
 
