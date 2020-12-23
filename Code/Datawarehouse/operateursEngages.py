@@ -30,7 +30,7 @@ dataset_group = dataset.groupby(["Annee", "Departement"])
 dict_annee = {departement: dataset.groupby(["Departement"]).get_group(departement).Annee.values.tolist()
               for departement in list_departement}
 
-dict_operateurs = {departement : [{"annee": annee,
+dict_operateurs = {departement : [{"Annee": annee,
                            "Distributeurs": dataset_group.get_group((annee, departement)).Distributeurs.values.item(0),
                            "Importateurs": dataset_group.get_group((annee, departement)).Importateurs.values.item(0),
                            "Producteurs": dataset_group.get_group((annee, departement)).Producteurs.values.item(0),
@@ -59,6 +59,5 @@ for row in dict_operateurs.keys():
     db.departements.update_one({"departement": row}, {"$set": {"operateurs": dict_operateurs[row]}})
 
 
-pd.read_csv("../../Data/production_animal/animal_bio.csv")
 
 

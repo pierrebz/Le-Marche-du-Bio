@@ -17,5 +17,5 @@ def ingest_cloud_storage(file, path_file, bucket_name, key):
 
 
 if __name__ == "__main__":
-    ingest_cloud_storage(file="production_animal/animal_bio.csv", path_file="../../Data/", bucket_name="biofitec_datalake",
+    ingest_cloud_storage(file="impots/Ircom_2011_revenus2010.csv", path_file="../../Data/", bucket_name= public_settings.bucket,
                          key= public_settings.path_key_bucket)

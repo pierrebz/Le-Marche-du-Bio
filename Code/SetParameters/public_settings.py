@@ -1,5 +1,5 @@
 ########### Google Cloud Platform
-path_key_bucket = "/home/fitec/Le-Marche-du-Bio/auth_gcp/BIOFITEC-45dd36df7db7.json"
+path_key_bucket = "../../auth_gcp/BIOFITEC-45dd36df7db7.json"
 bucket = "biofitec_datalake"
 
 
