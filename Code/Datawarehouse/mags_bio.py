@@ -244,4 +244,4 @@ collection = db["departements"] #collection
 
 # ajoute la variable commune
 for row in dict_mag.keys():
-    db.departements.update_one({"departement": row}, {"$set": {"population": dict_mag[row]}})
+    db.departements.update_one({"departement": row}, {"$set": {"magasins": dict_mag[row]}})
