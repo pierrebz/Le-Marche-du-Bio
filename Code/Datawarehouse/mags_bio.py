@@ -221,10 +221,6 @@ dataset_all = dataset_all[dataset_all.NomMag.isin(main_ens)]
 # maj index
 dataset_all.reset_index(drop=True, inplace=True)
 
-# selection des colonnes Departement, Revenu fiscal de référence par tranche (en euros) et Nombre de foyers fiscaux
-dataset_all_pivot = dataset_all.pivot(columns = "NomMag",
-                                            index= "Departement")
-
 # imbrication des données
 list_departement = dataset_all.Departement.unique()
 dataset_group = dataset_all.groupby(["NomMag", "Departement"])
