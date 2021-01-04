@@ -1,11 +1,11 @@
 version: '3.6'
 volumes:
   shared-workspace:
-    name: "Spark_Mongo"
+    name: "Spark_Mongo1"
     driver: local
-  rs1:
-  rs2:
-  rs3:
+  rs11:
+  rs12:
+  rs13:
 
 services:
   jupyterlab:
@@ -72,7 +72,7 @@ services:
       - 28117:27017
     container_name: mongo1
     volumes:
-      - rs1:/data/db
+      - rs11:/data/db
     networks:
       - localnet
     restart: always
@@ -82,7 +82,7 @@ services:
     container_name: mongo2
     command: --replSet rs0 --oplogSize 128 --bind_ip 0.0.0.0
     volumes:
-      - rs2:/data/db
+      - rs12:/data/db
     networks:
       - localnet
     ports:
@@ -94,7 +94,7 @@ services:
     container_name: mongo3
     command: --replSet rs0 --oplogSize 128 --bind_ip 0.0.0.0
     volumes:
-      - rs3:/data/db
+      - rs13:/data/db
     networks:
       - localnet
     ports:
