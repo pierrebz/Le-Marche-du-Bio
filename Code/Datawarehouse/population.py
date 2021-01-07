@@ -38,13 +38,13 @@ for col in range(2, len(all_dataset.columns) - 1):
 #
 population = {}
 for i in all_dataset["Departement"].unique():
-    population[i] = [{"Annee": all_dataset["Annee"][j].item(),
+    population[i] = {"population_"+ str(all_dataset["Annee"][j].item()) :{"Annee": all_dataset["Annee"][j].item(),
                       "Age_0_19": {"Hommes": int(all_dataset["Hommes 0 à 19 ans"][j]), "Femmes": int(all_dataset["Femmes 0 à 19 ans"][j])},
                       "Age_20_39": {"Hommes": int(all_dataset["Hommes 20 à 39 ans"][j]), "Femmes": int(all_dataset["Femmes 20 à 39 ans"][j])},
                       "Age_40_59": {"Hommes": int(all_dataset["Hommes 40 à 59 ans"][j]), "Femmes": int(all_dataset["Femmes 40 à 59 ans"][j])},
                       "Age_60_74": {"Hommes": int(all_dataset["Hommes 60 à 74 ans"][j]), "Femmes": int(all_dataset["Femmes 60 à 74 ans"][j])},
                       "Age_75_plus": {"Hommes": int(all_dataset["Hommes 75 ans et plus"][j]), "Femmes": int(all_dataset["Femmes 75 ans et plus"][j])}}
-            for j in all_dataset[all_dataset["Departement"] == i].index]
+                      for j in all_dataset[all_dataset["Departement"] == i].index}
 
 
 ######## ingest dans mongoDB
@@ -54,4 +54,5 @@ collection = db["departements"] #collection
 
 # ajoute la variable commune
 for row in population.keys():
-    db.departements.update_one({"departement": row}, {"$set": {"population": population[row]}})
+    for field in population[row].keys():
+        db.departements.update_one({"departement": row}, {"$set": {field: population[row][field]}})

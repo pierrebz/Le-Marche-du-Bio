@@ -46,7 +46,7 @@ all_dataset_ss_pivot.reset_index(inplace= True)
 
 revenus = {}
 for departement in all_dataset_ss_pivot.Departement.unique():
-    revenus[departement] = [{"Annee": all_dataset_ss_pivot["Annee"][j].item(),
+    revenus[departement] = {"revenus_"+ str(all_dataset_ss_pivot["Annee"][j].item()) :{"Annee": all_dataset_ss_pivot["Annee"][j].item(),
                              "Revenus_0_10K": all_dataset_ss_pivot["Nombre de foyers fiscaux 0 à 10 000"][j],
                             "Revenus_10k_12k": all_dataset_ss_pivot["Nombre de foyers fiscaux 10 001 à 12 000"][j],
                              "Revenus_12k_15k": all_dataset_ss_pivot["Nombre de foyers fiscaux 12 001 à 15 000"][j],
@@ -55,7 +55,7 @@ for departement in all_dataset_ss_pivot.Departement.unique():
                              "Revenus_30k_50k": all_dataset_ss_pivot["Nombre de foyers fiscaux 30 001 à 50 000"][j],
                              "Revenus_50k_100k": all_dataset_ss_pivot["Nombre de foyers fiscaux 50 001 à 100 000"][j],
                              "Revenus_100k_plus": all_dataset_ss_pivot["Nombre de foyers fiscaux + de 100 000"][j]}
-                            for j in all_dataset_ss_pivot[all_dataset_ss_pivot["Departement"] == departement].index]
+                            for j in all_dataset_ss_pivot[all_dataset_ss_pivot["Departement"] == departement].index}
 
 # on supprime les valeurs NaN
 for depart in revenus.keys():
@@ -64,9 +64,9 @@ for depart in revenus.keys():
                            "Revenus_15k_20k", "Revenus_20k_30k", "Revenus_30k_50k",
                         "Revenus_50k_100k", "Revenus_100k_plus"]:
             try:
-                year[tranche] = int(year[tranche])
+                revenus[depart][year][tranche] = int(revenus[depart][year][tranche])
             except ValueError:
-                del year[tranche]
+                del revenus[depart][year][tranche]
                 continue
 
 ######## ingest dans mongoDB
@@ -76,4 +76,5 @@ collection = db["departements"] #collection
 
 # ajoute la variable commune
 for row in revenus.keys():
-    db.departements.update_one({"departement": row}, {"$set": {"revenus": revenus[row]}})
+    for field in revenus[row].keys():
+        db.departements.update_one({"departement": row}, {"$set": {field: revenus[row][field]}})

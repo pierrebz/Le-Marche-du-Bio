@@ -225,11 +225,12 @@ dataset_all.reset_index(drop=True, inplace=True)
 list_departement = dataset_all.Departement.unique()
 dataset_group = dataset_all.groupby(["NomMag", "Departement"])
 
-dict_mag = {departement : [] for departement in list_departement}
-for i in dict_mag.keys():
+dict_mag = {departement : {} for departement in list_departement}
+
+for i in list_departement:
     for row in main_ens:
         try:
-            dict_mag[i].append({row: dataset_group.get_group((row, i)).NomMag.count().item()})
+            dict_mag[i][row] = dataset_group.get_group((row, i)).NomMag.count().item()
         except KeyError:
             continue
 

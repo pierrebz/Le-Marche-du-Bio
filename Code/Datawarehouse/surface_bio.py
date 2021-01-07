@@ -91,22 +91,21 @@ dataset_surface_C3_pivot.reset_index(inplace= True)
 
 surface = {}
 for departement in dataset_surface.Departement.unique():
-    surface[departement] = [{"Annee": dataset_surface_Bio_pivot["Annee"][j].item(),
-                             "Surface BIO": {nom: dataset_surface_Bio_pivot[nom][j].item() for nom in dataset_surface_Bio_pivot.columns[2:]},
-                             "Surface C1": {nom: dataset_surface_C1_pivot[nom][j].item() for nom in dataset_surface_C1_pivot.columns[2:]},
-                             "Surface C2": {nom: dataset_surface_C2_pivot[nom][j].item() for nom in dataset_surface_C2_pivot.columns[2:]},
-                             "Surface C3": {nom: dataset_surface_C3_pivot[nom][j].item() for nom in dataset_surface_C3_pivot.columns[2:]}}
-                            for j in dataset_surface_Bio_pivot[dataset_surface_Bio_pivot["Departement"] == departement].index]
+    surface[departement] = {"surface_"+str(dataset_surface_Bio_pivot["Annee"][j].item()) : {"Annee": dataset_surface_Bio_pivot["Annee"][j].item(),
+                             "Surface_BIO": {nom: dataset_surface_Bio_pivot[nom][j].item() for nom in dataset_surface_Bio_pivot.columns[2:]},
+                             "Surface_C1": {nom: dataset_surface_C1_pivot[nom][j].item() for nom in dataset_surface_C1_pivot.columns[2:]},
+                             "Surface_C2": {nom: dataset_surface_C2_pivot[nom][j].item() for nom in dataset_surface_C2_pivot.columns[2:]},
+                             "Surface_C3": {nom: dataset_surface_C3_pivot[nom][j].item() for nom in dataset_surface_C3_pivot.columns[2:]}}
+                            for j in dataset_surface_Bio_pivot[dataset_surface_Bio_pivot["Departement"] == departement].index}
 
 
 # on supprime les valeurs NaN
 for depart in surface.keys():
     for year in surface[depart]:
-        for type_surface in [*year.keys()][1:]:
+        for type_surface in list(surface[depart][year].keys())[1:]:
             for cult in dataset_surface_Bio_pivot.columns[2:]:
-                if pd.isnull(year[type_surface][cult]):
-                    del year[type_surface][cult]
-
+                if pd.isnull(surface[depart][year][type_surface][cult]):
+                    del surface[depart][year][type_surface][cult]
 
 ############## Insert MongoDB
 client = MongoClient("localhost", public_settings.port_DWH)
@@ -116,4 +115,5 @@ collection = db["departements"] #collection
 
 # ajoute la variable commune
 for row in surface.keys():
-    db.departements.update_one({"departement": row}, {"$set": {"surfaces": surface[row]}})
+    for field in surface[row].keys():
+        db.departements.update_one({"departement": row}, {"$set": {field: surface[row][field]}})
