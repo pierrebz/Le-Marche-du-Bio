@@ -19,6 +19,7 @@ file = CloudStorage.Cloud(key= public_settings.path_key_bucket,
 
 dataset = pd.read_csv(StringIO(file.dataset), ",")
 
+dataset.drop_duplicates(inplace= True)
 #####
 # Afin d'effectuer la correspondance lat/long -> code postal, on peut passer par l'API de Google ou tout autre API
 # L'inconvénient est la limitation de leur utilisation. Pour cette raison nous allons passer par une solution proposée
@@ -79,6 +80,7 @@ dataset_all.name = dataset_all.name.str.upper()
 dataset_all.address = dataset_all.address.apply(unidecode)
 dataset_all.address = dataset_all.address.str.upper()
 
+dataset_all.drop_duplicates(inplace= True)
 
 def set_commune(df):
     """
